@@ -7,7 +7,7 @@ low_OC = 'ctrl+alt+a'
 high_OC = 'ctrl+alt+b'
 
 process_name = "t-rex"
-output_file = "C:/Users/Faisal/AppData/Local/Programs/NiceHash Miner/miner_plugins/03f80500-94ec-11ea-a64d-17be303ea466/bins/15.7/output.txt"
+output_file = "output.txt"
 pid = ""
 
 def get_process():
@@ -19,18 +19,18 @@ def get_process():
     return 0
 
 p = get_process()
-cutoff = 34
+line_offset = 34
 while p != 0:
     f = open(output_file, "r")
     data = f.read().splitlines()
 
-    if cutoff != 34:
-        for line in data[cutoff:]:
+    if line_offset != 34:
+        for line in data[line_offset:]:
             print(line)
     else:
-        print("\n######################### T-REX OC MANAGER #########################")
+        print("\n######################### T-REX OC FIX #########################")
 
-    for line in data[cutoff: ]:
+    for line in data[line_offset: ]:
           if "generating DAG" in line or "R:100%" in line:
                 print("\nLow OC turned on")
                 keyboard.press_and_release(low_OC)
@@ -47,10 +47,8 @@ while p != 0:
                 print("\nMiner is currently running...")
                 p = get_process()
 
-    cutoff = len(data)
+    line_offset = len(data)
     time.sleep(25)
 
 print("Unknown miner, setting low OC")
-keyboard.press_and_release(low_OC)
-time.sleep(5)
 keyboard.press_and_release(low_OC)
