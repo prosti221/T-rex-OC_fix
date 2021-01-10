@@ -8,14 +8,11 @@ high_OC = 'ctrl+alt+b'
 
 process_name = "t-rex"
 output_file = "output.txt"
-pid = ""
 
 def get_process():
     for proc in psutil.process_iter():
         if process_name in proc.name():
-            pid = proc.pid
-            p = psutil.Process(pid)
-            return p
+            return psutil.Process(proc.pid)
     return 0
 
 p = get_process()
