@@ -15,37 +15,38 @@ def get_process():
             return psutil.Process(proc.pid)
     return 0
 
-p = get_process()
-line_offset = 34
-while p != 0:
-    f = open(output_file, "r")
-    data = f.read().splitlines()
+if __name__ == "__main__":
+    p = get_process()
+    line_offset = 34
+    while p != 0:
+        f = open(output_file, "r")
+        data = f.read().splitlines()
 
-    if line_offset != 34:
-        for line in data[line_offset:]:
-            print(line)
-    else:
-        print("\n######################### T-REX OC FIX #########################")
+        if line_offset != 34:
+            for line in data[line_offset:]:
+                print(line)
+        else:
+            print("\n######################### T-REX OC FIX #########################")
 
-    for line in data[line_offset: ]:
-          if "generating DAG" in line or "R:100%" in line:
-                print("\nLow OC turned on")
-                keyboard.press_and_release(low_OC)
-                time.sleep(2)
-                print("Restarting miner and generating new DAG")
-                try:
-                    p.kill()
-                except:
-                    print("Process no longer exists, turning on low OC")
+        for line in data[line_offset: ]:
+              if "generating DAG" in line or "R:100%" in line:
+                    print("\nLow OC turned on")
                     keyboard.press_and_release(low_OC)
-                time.sleep(70)
-                print("High OC turned on")
-                keyboard.press_and_release(high_OC)
-                print("\nMiner is currently running...")
-                p = get_process()
+                    time.sleep(2)
+                    print("Restarting miner and generating new DAG")
+                    try:
+                        p.kill()
+                    except:
+                        print("Process no longer exists, turning on low OC")
+                        keyboard.press_and_release(low_OC)
+                    time.sleep(70)
+                    print("High OC turned on")
+                    keyboard.press_and_release(high_OC)
+                    print("\nMiner is currently running...")
+                    p = get_process()
 
-    line_offset = len(data)
-    time.sleep(25)
+        line_offset = len(data)
+        time.sleep(25)
 
-print("Unknown miner, setting low OC")
-keyboard.press_and_release(low_OC)
+    print("Unknown miner, setting low OC")
+    keyboard.press_and_release(low_OC)
